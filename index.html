@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State Level E-Quiz Competition | G.E.S. College Of Pharmacy</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --primary-light: #e0f2fe;
+            --secondary: #0d9488;
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --success: #10b981;
+            --dark-bg: #0f172a;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(to right, rgba(2, 132, 199, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(2, 132, 199, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* HEADER STYLING */
+        header {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 12px 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-box {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.4); }
+            100% { box-shadow: 0 0 0 10px rgba(2, 132, 199, 0); }
+        }
+
+        .college-details h1 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .college-details p {
+            font-size: 0.8rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        .badge-tag {
+            background: linear-gradient(135deg, #0284c7, #0d9488);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* MAIN CONTAINER */
+        main {
+            flex: 1;
+            max-width: 900px;
+            width: 100%;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        /* CARD CONTAINERS */
+        .glass-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 32px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        /* TIMER BOX */
+        .timer-banner {
+            background: #0f172a;
+            color: white;
+            padding: 16px 24px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.05);
+        }
+
+        .timer-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timer-info i {
+            color: var(--accent);
+            font-size: 1.4rem;
+            animation: spinSlow 10s linear infinite;
+        }
+
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .timer-clock {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #38bdf8;
+            letter-spacing: 1px;
+        }
+
+        /* FORM STYLING */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            background: #f8fafc;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15);
+        }
+
+        /* BUTTONS */
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.25s ease;
+            margin-top: 24px;
+            box-shadow: 0 8px 16px rgba(2, 132, 199, 0.25);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px rgba(2, 132, 199, 0.35);
+        }
+
+        .btn-primary:disabled {
+            background: #cbd5e1;
+            color: #94a3b8;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* EXAM INTERFACE */
+        .exam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #f1f5f9;
+            margin-bottom: 24px;
+        }
+
+        .question-number {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 18px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #ffffff;
+        }
+
+        .option-item:hover {
+            border-color: #93c5fd;
+            background: #f0f9ff;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary);
+            background: #e0f2fe;
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+
+        .option-badge {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: #f1f5f9;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 14px;
+            flex-shrink: 0;
+        }
+
+        .option-item.selected .option-badge {
+            background: var(--primary);
+            color: white;
+        }
+
+        .nav-controls {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .btn-secondary {
+            padding: 12px 24px;
+            background: #f1f5f9;
+            color: #334155;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #e2e8f0;
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* VIOLATION / WARNING MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            max-width: 480px;
+            width: 100%;
+            padding: 32px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: scale(1);
+        }
+
+        .warning-icon {
+            width: 64px;
+            height: 64px;
+            background: #fee2e2;
+            color: var(--danger);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 16px;
+        }
+
+        /* LOCKOUT PENALTY MODAL */
+        .penalty-card {
+            background: #1e1b4b;
+            color: white;
+            border: 2px solid #6366f1;
+        }
+
+        .penalty-clock {
+            font-size: 3rem;
+            font-family: 'Space Grotesk', monospace;
+            color: #f43f5e;
+            margin: 16px 0;
+            font-weight: 700;
+        }
+
+        /* SCORECARD */
+        .score-box {
+            text-align: center;
+            padding: 24px;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-radius: var(--radius-md);
+            margin: 20px 0;
+            border: 1px dashed var(--primary);
+        }
+
+        .score-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #ffffff;
+            border-top: 1px solid var(--border-color);
+            padding: 16px 24px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+
+        footer strong {
+            color: var(--primary);
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 640px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            .college-details h1 {
+                font-size: 0.95rem;
+            }
+            .glass-card {
+                padding: 20px;
+            }
+            .timer-clock {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <div class="brand-section">
+                <div class="logo-box">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="college-details">
+                    <h1>G.E.S. College Of Pharmacy (D.Pharm)</h1>
+                    <p><i class="fa-solid fa-location-dot"></i> Limb, Satara</p>
+                </div>
+            </div>
+            <div class="badge-tag">
+                <i class="fa-solid fa-bolt"></i> State Level E-Quiz
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main>
+
+        <!-- VIEW 1: CLOSED LINK NOTICE -->
+        <div id="closedView" class="glass-card" style="display: none; text-align: center;">
+            <div style="font-size: 3rem; color: var(--accent); margin-bottom: 16px;">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h2 style="font-size: 1.5rem; color: #0f172a; margin-bottom: 12px;">Quiz Registration & Portal Closed</h2>
+            <p style="color: var(--text-muted); line-height: 1.6; max-width: 500px; margin: 0 auto 24px;">
+                Thank you for your overwhelming interest! The State Level E-Quiz Competition link is currently <strong>CLOSED</strong> or has concluded as per the official schedule.
+            </p>
+            <div style="background: #f8fafc; padding: 16px; border-radius: 10px; border: 1px solid #e2e8f0; font-size: 0.9rem;">
+                <i class="fa-solid fa-circle-info" style="color: var(--primary);"></i> For queries, contact G.E.S. College Of Pharmacy Examination Cell.
+            </div>
+        </div>
+
+        <!-- VIEW 2: REGISTRATION & TIMER HOME PAGE -->
+        <div id="registrationView" class="glass-card">
+            
+            <!-- COUNTDOWN TIMER BANNER -->
+            <div class="timer-banner">
+                <div class="timer-info">
+                    <i class="fa-solid fa-clock"></i>
+                    <div>
+                        <div style="font-size: 0.75rem; text-transform: uppercase; color: #94a3b8; font-weight: 700;" id="timerLabel">Exam Starts In</div>
+                        <div style="font-size: 0.85rem; font-weight: 600;" id="scheduledTimeText">Scheduled Start: Loading...</div>
+                    </div>
+                </div>
+                <div class="timer-clock" id="countdownClock">00:00:00</div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h2 style="font-size: 1.4rem; color: #0f172a; font-weight: 800;">Candidate Registration</h2>
+                <p style="font-size: 0.88rem; color: var(--text-muted);">Please fill in your authentic details before starting the State Level E-Quiz Test.</p>
+            </div>
+
+            <form id="registrationForm" onsubmit="event.preventDefault();">
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label><i class="fa-solid fa-user"></i> Full Name Of Candidate *</label>
+                        <input type="text" id="candidateName" placeholder="e.g. Rahul Ramesh Patil" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label><i class="fa-solid fa-building-columns"></i> College Name *</label>
+                        <input type="text" id="collegeName" placeholder="e.g. Government Polytechnic / Pharmacy College" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-layer-group"></i> Year Of Study *</label>
+                        <select id="yearOfStudy" required>
+                            <option value="">-- Select Year --</option>
+                            <option value="First Year">First Year D.Pharm</option>
+                            <option value="Second Year">Second Year D.Pharm</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-envelope"></i> Email ID *</label>
+                        <input type="email" id="emailId" placeholder="rahul@gmail.com" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label><i class="fa-brands fa-whatsapp"></i> WhatsApp Phone Number *</label>
+                        <input type="tel" id="whatsappNo" placeholder="10-digit Mobile Number" pattern="[0-9]{10}" required>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; background: #fff7ed; border: 1px solid #fed7aa; padding: 14px; border-radius: 10px; font-size: 0.82rem; color: #9a3412;">
+                    <i class="fa-solid fa-shield-halved"></i> <strong>Proctoring Notice:</strong> Test will run in full-screen mode. Tab switching, screen exiting, and screenshots are strictly monitored by AI Surveillance.
+                </div>
+
+                <button type="button" id="startExamBtn" class="btn-primary" disabled onclick="initiateExam()">
+                    <i class="fa-solid fa-play"></i> Start Exam (Locked Until Timer Hits 00:00)
+                </button>
+            </form>
+        </div>
+
+        <!-- VIEW 3: LIVE MCQ EXAM INTERFACE -->
+        <div id="examView" class="glass-card" style="display: none;">
+            <div class="exam-header">
+                <div>
+                    <span class="question-number" id="questionCounter">Question 1 of --</span>
+                    <h3 style="font-size: 0.85rem; color: var(--text-muted);" id="activeCandidateTag">Candidate: --</h3>
+                </div>
+                <div style="background: #f1f5f9; padding: 8px 16px; border-radius: 20px; font-weight: 700; color: var(--danger); font-family: 'Space Grotesk';">
+                    <i class="fa-solid fa-hourglass-half"></i> <span id="testRemainingTimer">20:00</span>
+                </div>
+            </div>
+
+            <div class="question-text" id="questionText">
+                Loading question data...
+            </div>
+
+            <div class="options-list" id="optionsContainer">
+                <!-- Options rendered dynamically -->
+            </div>
+
+            <div class="nav-controls">
+                <button class="btn-secondary" id="prevBtn" onclick="navigateQuestion(-1)"><i class="fa-solid fa-arrow-left"></i> Previous</button>
+                <button class="btn-secondary" id="nextBtn" onclick="navigateQuestion(1)">Next <i class="fa-solid fa-arrow-right"></i></button>
+                <button class="btn-primary" id="submitExamBtn" style="margin-top:0; width:auto; padding: 12px 28px; background: linear-gradient(135deg, #10b981, #059669);" onclick="submitExam()">
+                    <i class="fa-solid fa-paper-plane"></i> Submit Test
+                </button>
+            </div>
+        </div>
+
+        <!-- VIEW 4: RESULT & SCORECARD -->
+        <div id="resultView" class="glass-card" style="display: none; text-align: center;">
+            <div style="font-size: 3.5rem; color: var(--success); margin-bottom: 10px;">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h2 style="font-size: 1.8rem; color: #0f172a; font-weight: 800;">Congratulations!</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 16px;">
+                You have successfully completed the <strong>State Level E-Quiz Competition</strong>!
+            </p>
+
+            <div class="score-box">
+                <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Your Score</div>
+                <div class="score-number" id="displayScore">0 / 0</div>
+                <div style="font-size: 0.9rem; font-weight: 600; color: var(--primary);" id="scorePercentage">0% Marks Obtained</div>
+            </div>
+
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 20px; border-radius: 12px; margin-bottom: 24px;">
+                <h4 style="color: #166534; font-size: 1rem; margin-bottom: 6px;"><i class="fa-solid fa-award"></i> Certificate Download Info</h4>
+                <p style="color: #15803d; font-size: 0.85rem; line-height: 1.5;">
+                    Please complete the brief Feedback Form to claim and download your official E-Certificate.
+                </p>
+            </div>
+
+            <a href="https://forms.gle/YOUR_FEEDBACK_FORM_LINK" target="_blank" class="btn-primary" style="text-decoration: none; display: inline-flex; width: auto; padding: 14px 32px;">
+                <i class="fa-solid fa-pen-to-square"></i> Fill Feedback Form & Get Certificate
+            </a>
+        </div>
+
+    </main>
+
+    <!-- PROCTORING WARNING MODAL -->
+    <div class="modal-overlay" id="warningModal">
+        <div class="modal-card">
+            <div class="warning-icon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 style="font-size: 1.3rem; color: #0f172a; margin-bottom: 8px;" id="warningTitle">Security Warning!</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px;" id="warningMsg">
+                Don't switch tabs or exit full-screen! Our AI Surveillance system is actively supervising the exam.
+            </p>
+            <div style="background: #fef2f2; border: 1px solid #fecaca; color: var(--danger); font-size: 0.85rem; font-weight: 700; padding: 10px; border-radius: 8px; margin-bottom: 20px;">
+                Violation Count: <span id="violationCountTag">1</span> / 3
+            </div>
+            <button class="btn-primary" style="margin-top:0;" onclick="dismissWarning()">I Understand & Resume</button>
+        </div>
+    </div>
+
+    <!-- LOCKOUT PENALTY MODAL -->
+    <div class="modal-overlay" id="penaltyModal">
+        <div class="modal-card penalty-card">
+            <div style="font-size: 3rem; color: #f43f5e;">
+                <i class="fa-solid fa-user-lock"></i>
+            </div>
+            <h3 style="font-size: 1.4rem; margin-bottom: 8px;">Exam Suspended Temporarily</h3>
+            <p style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.5;">
+                Multiple rules violations detected (>3 times tab switch / screenshot attempt). Penalty lock activated!
+            </p>
+            <div class="penalty-clock" id="penaltyClock">01:00</div>
+            <p style="font-size: 0.8rem; color: #94a3b8;">
+                Test will resume automatically when timer finishes. Do NOT close the browser.
+            </p>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        State Level E-Quiz Competition &bull; <strong>G.E.S. College Of Pharmacy (D.Pharm), Limb, Satara</strong><br>
+        <span style="font-size: 0.78rem; color: #94a3b8; display: inline-block; margin-top: 4px;">
+            Made By <strong>Pharma2tech systems pvt ltd</strong>
+        </span>
+    </footer>
+
+    <!-- JS SCRIPT LOGIC -->
+    <script>
+        // LIVE APPS SCRIPT WEB APP API ENDPOINTS
+        const QUIZ_CONFIG_API = "https://script.google.com/macros/s/AKfycbzrzfuWujeDzCBAJOBc4ZwhucDYpwUH_072eisHK_oRmIeJ4P64yMAdgqHNkt3wNzw/exec";
+        const SUBMISSION_API  = "https://script.google.com/macros/s/AKfycby9q_s7v9OvVjdJuUA9rF0GkhN2-FvnMzjeHZvHVl-tWQJZFaFELG8MBVgC_-90dsZ0/exec";
+
+        let quizData = [];
+        let userAnswers = {};
+        let currentQuestionIndex = 0;
+        let violationCount = 0;
+        let penaltyTimerInterval = null;
+        let examTimerInterval = null;
+        let candidateDetails = {};
+        let examDurationMinutes = 20;
+
+        const formFields = ['candidateName', 'collegeName', 'yearOfStudy', 'emailId', 'whatsappNo'];
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSavedFormData();
+            fetchQuizConfigAndQuestions();
+            setupAntiCheatingListeners();
+        });
+
+        function loadSavedFormData() {
+            formFields.forEach(fieldId => {
+                const val = localStorage.getItem(fieldId);
+                if (val) document.getElementById(fieldId).value = val;
+                document.getElementById(fieldId).addEventListener('input', (e) => {
+                    localStorage.setItem(fieldId, e.target.value);
+                });
+            });
+        }
+
+        function fetchQuizConfigAndQuestions() {
+            fetch(QUIZ_CONFIG_API)
+                .then(res => res.json())
+                .then(data => handlePortalInit(data))
+                .catch(err => {
+                    console.error("Error loading quiz configuration:", err);
+                    alert("Unable to fetch quiz details. Please check your internet connection or try again later.");
+                });
+        }
+
+        function handlePortalInit(data) {
+            if (data.status === "CLOSED") {
+                document.getElementById('registrationView').style.display = 'none';
+                document.getElementById('closedView').style.display = 'block';
+                return;
+            }
+
+            quizData = data.questions || [];
+            if (data.durationMinutes) examDurationMinutes = data.durationMinutes;
+
+            document.getElementById('scheduledTimeText').innerText = "Scheduled Start: " + (data.startTime || "Now");
+
+            if (data.startTime) {
+                const startDateTime = parseDDMMYYYYTime(data.startTime);
+                startReverseCountdown(startDateTime);
+            } else {
+                enableStartButton();
+            }
+        }
+
+        function parseDDMMYYYYTime(timeStr) {
+            try {
+                const [datePart, timePart, ampm] = timeStr.split(' ');
+                const [d, m, y] = datePart.split('/').map(Number);
+                let [hours, mins] = timePart.split(':').map(Number);
+                if (ampm === 'PM' && hours < 12) hours += 12;
+                if (ampm === 'AM' && hours === 12) hours = 0;
+                return new Date(y, m - 1, d, hours, mins, 0);
+            } catch(e) {
+                return new Date();
+            }
+        }
+
+        function enableStartButton() {
+            const clockEl = document.getElementById('countdownClock');
+            const startBtn = document.getElementById('startExamBtn');
+            clockEl.innerText = "00:00:00";
+            clockEl.style.color = "#10b981";
+            document.getElementById('timerLabel').innerText = "Exam Status: Live!";
+            startBtn.disabled = false;
+            startBtn.innerHTML = '<i class="fa-solid fa-play"></i> Start Exam Now';
+        }
+
+        function startReverseCountdown(targetDate) {
+            const clockEl = document.getElementById('countdownClock');
+
+            function updateClock() {
+                const now = new Date();
+                const diff = targetDate - now;
+
+                if (diff <= 0) {
+                    enableStartButton();
+                    return;
+                }
+
+                const hrs = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, '0');
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                const secs = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+                clockEl.innerText = `${hrs}:${mins}:${secs}`;
+                setTimeout(updateClock, 1000);
+            }
+            updateClock();
+        }
+
+        function initiateExam() {
+            const name = document.getElementById('candidateName').value.trim();
+            const college = document.getElementById('collegeName').value.trim();
+            const year = document.getElementById('yearOfStudy').value;
+            const email = document.getElementById('emailId').value.trim();
+            const phone = document.getElementById('whatsappNo').value.trim();
+
+            if (!name || !college || !year || !email || !phone) {
+                alert("Please complete all registration details before starting!");
+                return;
+            }
+
+            candidateDetails = { name, college, year, email, phone };
+            document.getElementById('activeCandidateTag').innerText = `Candidate: ${name}`;
+
+            requestFullScreen();
+
+            document.getElementById('registrationView').style.display = 'none';
+            document.getElementById('examView').style.display = 'block';
+
+            renderQuestion(0);
+            startExamTimer(examDurationMinutes * 60);
+        }
+
+        function requestFullScreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) elem.requestFullscreen();
+            else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+            else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+        }
+
+        function renderQuestion(index) {
+            currentQuestionIndex = index;
+            const q = quizData[index];
+
+            document.getElementById('questionCounter').innerText = `Question ${index + 1} of ${quizData.length}`;
+            document.getElementById('questionText').innerText = q.question;
+
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+
+            const options = [
+                { key: 'A', text: q.optionA },
+                { key: 'B', text: q.optionB },
+                { key: 'C', text: q.optionC },
+                { key: 'D', text: q.optionD }
+            ];
+
+            options.forEach(opt => {
+                const div = document.createElement('div');
+                div.className = `option-item ${userAnswers[q.id] === opt.key ? 'selected' : ''}`;
+                div.onclick = () => selectOption(q.id, opt.key);
+                div.innerHTML = `
+                    <div class="option-badge">${opt.key}</div>
+                    <div style="font-size: 0.98rem; font-weight: 600; color: #334155;">${opt.text}</div>
+                `;
+                container.appendChild(div);
+            });
+
+            document.getElementById('prevBtn').disabled = (index === 0);
+            document.getElementById('nextBtn').style.display = (index === quizData.length - 1) ? 'none' : 'inline-flex';
+            document.getElementById('submitExamBtn').style.display = (index === quizData.length - 1) ? 'inline-flex' : 'none';
+        }
+
+        function selectOption(qId, key) {
+            userAnswers[qId] = key;
+            renderQuestion(currentQuestionIndex);
+        }
+
+        function navigateQuestion(step) {
+            const nextIdx = currentQuestionIndex + step;
+            if (nextIdx >= 0 && nextIdx < quizData.length) {
+                renderQuestion(nextIdx);
+            }
+        }
+
+        function startExamTimer(seconds) {
+            let remaining = seconds;
+            const timerEl = document.getElementById('testRemainingTimer');
+
+            examTimerInterval = setInterval(() => {
+                remaining--;
+                const m = Math.floor(remaining / 60).toString().padStart(2, '0');
+                const s = (remaining % 60).toString().padStart(2, '0');
+                timerEl.innerText = `${m}:${s}`;
+
+                if (remaining <= 0) {
+                    clearInterval(examTimerInterval);
+                    alert("Time's up! Submitting your test automatically.");
+                    submitExam();
+                }
+            }, 1000);
+        }
+
+        function setupAntiCheatingListeners() {
+            window.addEventListener('blur', () => {
+                if (document.getElementById('examView').style.display === 'block') {
+                    triggerSecurityViolation("Tab switch or application minimize detected!");
+                }
+            });
+
+            document.addEventListener('fullscreenchange', () => {
+                if (!document.fullscreenElement && document.getElementById('examView').style.display === 'block') {
+                    triggerSecurityViolation("Full-screen mode exited!");
+                }
+            });
+
+            document.addEventListener('keyup', (e) => {
+                if (e.key === 'PrintScreen' && document.getElementById('examView').style.display === 'block') {
+                    navigator.clipboard.writeText('');
+                    triggerSecurityViolation("Screenshot attempt detected! Don't take screenshot, our AI surveillance system is actively supervising the exam.");
+                }
+            });
+        }
+
+        function triggerSecurityViolation(message) {
+            violationCount++;
+            document.getElementById('violationCountTag').innerText = violationCount;
+            document.getElementById('warningMsg').innerText = message;
+
+            if (violationCount > 3) {
+                activatePenaltyLockout();
+            } else {
+                document.getElementById('warningModal').classList.add('active');
+            }
+        }
+
+        function dismissWarning() {
+            document.getElementById('warningModal').classList.remove('active');
+            requestFullScreen();
+        }
+
+        function activatePenaltyLockout() {
+            document.getElementById('warningModal').classList.remove('active');
+            document.getElementById('penaltyModal').classList.add('active');
+
+            let penaltySeconds = 60;
+            const clockEl = document.getElementById('penaltyClock');
+
+            penaltyTimerInterval = setInterval(() => {
+                penaltySeconds--;
+                const s = penaltySeconds.toString().padStart(2, '0');
+                clockEl.innerText = `00:${s}`;
+
+                if (penaltySeconds <= 0) {
+                    clearInterval(penaltyTimerInterval);
+                    document.getElementById('penaltyModal').classList.remove('active');
+                    violationCount = 0;
+                    requestFullScreen();
+                }
+            }, 1000);
+        }
+
+        function submitExam() {
+            clearInterval(examTimerInterval);
+
+            let correct = 0;
+            quizData.forEach(q => {
+                if (userAnswers[q.id] === q.answer) correct++;
+            });
+
+            const scoreText = `${correct} / ${quizData.length}`;
+            const percentage = Math.round((correct / quizData.length) * 100);
+
+            document.getElementById('displayScore').innerText = scoreText;
+            document.getElementById('scorePercentage').innerText = `${percentage}% Marks Obtained`;
+
+            document.getElementById('examView').style.display = 'none';
+            document.getElementById('resultView').style.display = 'block';
+
+            const payload = {
+                candidateName: candidateDetails.name,
+                collegeName: candidateDetails.college,
+                yearOfStudy: candidateDetails.year,
+                emailId: candidateDetails.email,
+                whatsappNo: candidateDetails.phone,
+                score: correct,
+                totalQuestions: quizData.length,
+                percentage: percentage,
+                timestamp: new Date().toISOString()
+            };
+
+            fetch(SUBMISSION_API, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                console.log("Submission successfully sent to Google Sheet API");
+            }).catch(err => {
+                console.error("Error submitting quiz results:", err);
+            });
+        }
+    </script>
+</body>
+</html>
